@@ -80,6 +80,15 @@ class GameView(arcade.Window):
             self.sprite.center_x -= 10
         if key == arcade.key.SPACE:
             self.sprite.center_y += 10
+            self.sprite.center_y -= 10
+        if key == arcade.key.RIGHT:
+            self.sprite.center_x += 10
+        if key == arcade.key.LEFT:
+            self.sprite.center_x -= 10
+        if key == arcade.key.UP:
+            self.sprite.center_y += 10
+            self.sprite.center_y -= 10
+
     """
 def main():
     """Main function"""
