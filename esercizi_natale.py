@@ -129,15 +129,14 @@ class BabboNatale(arcade.Window):
         # Gestione collisioni
         collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie) 
         
-        if len(collisioni) > 0: # Vuol dire che il personaggio si è scontrato con qualcosa
-            arcade.play_sound(self.suono_munch)
-            for cookie in collisioni:
+        #if len(collisioni) > 0: Vuol dire che il personaggio si è scontrato con qualcosa
+        for cookie in collisioni:
+            distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie):
+            if distanza >= 100:
+                arcade.play_sound(self.suono_munch)
                 cookie.remove_from_sprite_lists()
                 self.contatore += 1
-                arcade.get_distance_between_sprites(self.babbo, self.cookie) >= 100
-            self.crea_cookie() # creo un altro biscotto
-
-
+                self.crea_cookie()# creo un altro biscotto
 
     """     
     def contatore(self):
@@ -147,6 +146,7 @@ class BabboNatale(arcade.Window):
             for cookie in collisioni:
                 contatore += 1
     """
+
     def set_volume(self, volume: float, player) -> None:
         player.volume = volume
         pass
@@ -162,8 +162,8 @@ class BabboNatale(arcade.Window):
         elif tasto in (arcade.key.RIGHT, arcade.key.D):
             self.right_pressed = True
         elif tasto in (arcade.key.M):
-            self.set_volume()
-            pass
+            self.volume = False
+            
     
     def on_key_release(self, tasto, modificatori):
         """Gestisce il rilascio dei tasti"""
