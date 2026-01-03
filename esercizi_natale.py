@@ -131,7 +131,7 @@ class BabboNatale(arcade.Window):
         
         #if len(collisioni) > 0: Vuol dire che il personaggio si è scontrato con qualcosa
         for cookie in collisioni:
-            distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie):
+            distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie)
             if distanza >= 100:
                 arcade.play_sound(self.suono_munch)
                 cookie.remove_from_sprite_lists()
