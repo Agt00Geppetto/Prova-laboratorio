@@ -21,7 +21,7 @@ Dato questo giochino come partenza, aggiungere le seguenti modifiche:
     altri 5, vengono creati 3 biscotti per volta, poi 4, e via dicendo
 
 7 - (Opzionale) Ogni volta che genero un biscotto, al 3% di possibilità potrebbe essere un
-         "golden cookie". Il golden cookie rimane solo 3 secondi sullo schermo
+        "golden cookie". Il golden cookie rimane solo 3 secondi sullo schermo
         ma vale 100 punti. 
 
         - Crea una nuova immagine per il golden cookie
@@ -67,6 +67,13 @@ class BabboNatale(arcade.Window):
         self.cookie.center_y = random.randint(50, 550)
         self.cookie.scale = 0.2
         self.lista_cookie.append(self.cookie)
+
+    def multipli(self, n):
+        lista5 = []
+        n = 5
+        while True:
+            lista5.append(n)
+            n += 5
     
     def on_draw(self):
         self.clear()
@@ -120,14 +127,17 @@ class BabboNatale(arcade.Window):
             self.babbo.center_y = self.height
         
         # Gestione collisioni
-        collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie)
+        collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie) 
         
         if len(collisioni) > 0: # Vuol dire che il personaggio si è scontrato con qualcosa
             arcade.play_sound(self.suono_munch)
             for cookie in collisioni:
                 cookie.remove_from_sprite_lists()
                 self.contatore += 1
+                arcade.get_distance_between_sprites(self.babbo, self.cookie) >= 100
             self.crea_cookie() # creo un altro biscotto
+
+
 
     """     
     def contatore(self):
@@ -140,6 +150,7 @@ class BabboNatale(arcade.Window):
     def set_volume(self, volume: float, player) -> None:
         player.volume = volume
         pass
+        
 
     def on_key_press(self, tasto, modificatori):
         if tasto in (arcade.key.UP, arcade.key.W):
@@ -151,7 +162,7 @@ class BabboNatale(arcade.Window):
         elif tasto in (arcade.key.RIGHT, arcade.key.D):
             self.right_pressed = True
         elif tasto in (arcade.key.M):
-            self.volume = 0
+            self.set_volume()
             pass
     
     def on_key_release(self, tasto, modificatori):
