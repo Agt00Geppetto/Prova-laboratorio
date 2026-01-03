@@ -43,9 +43,9 @@ class BabboNatale(arcade.Window):
         self.down_pressed = False
         self.left_pressed = False
         self.right_pressed = False
-        
+        self.contatore = 0
         self.velocita = 4
-        
+        self.volume = 1
         self.setup()
 
         
@@ -75,7 +75,7 @@ class BabboNatale(arcade.Window):
             arcade.LBWH(0,0,600,600)
         )
         arcade.draw_text(
-            "Biscotti:",
+            f"Biscotti: {self.contatore}",
             10, self.height - 30,
             arcade.color.BLACK, 14
         )    
@@ -121,15 +121,12 @@ class BabboNatale(arcade.Window):
         
         # Gestione collisioni
         collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie)
-
-        #Dovrebbe tenere conto dei biscotti "raccolti"
-        contatore = 0
         
         if len(collisioni) > 0: # Vuol dire che il personaggio si è scontrato con qualcosa
             arcade.play_sound(self.suono_munch)
             for cookie in collisioni:
                 cookie.remove_from_sprite_lists()
-                contatore += 1
+                self.contatore += 1
             self.crea_cookie() # creo un altro biscotto
 
     """     
@@ -154,7 +151,7 @@ class BabboNatale(arcade.Window):
         elif tasto in (arcade.key.RIGHT, arcade.key.D):
             self.right_pressed = True
         elif tasto in (arcade.key.M):
-            arcade.play_sound(None)
+            self.volume = 0
             pass
     
     def on_key_release(self, tasto, modificatori):
