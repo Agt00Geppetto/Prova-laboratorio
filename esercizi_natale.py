@@ -2,7 +2,6 @@ import arcade
 import random
 
 
-
 """
 Compiti per casa: La scorpacciata di Babbo Natale
 Dato questo giochino come partenza, aggiungere le seguenti modifiche:
@@ -122,6 +121,10 @@ class BabboNatale(arcade.Window):
             for cookie in collisioni:
                 cookie.remove_from_sprite_lists()
             self.crea_cookie() # creo un altro biscotto
+
+    def set_volume(self, volume: float, player) -> None:
+        player.volume = volume
+
     
     def on_key_press(self, tasto, modificatori):
         if tasto in (arcade.key.UP, arcade.key.W):
@@ -132,6 +135,8 @@ class BabboNatale(arcade.Window):
             self.left_pressed = True
         elif tasto in (arcade.key.RIGHT, arcade.key.D):
             self.right_pressed = True
+        elif tasto in (arcade.key.M):
+            self.music.set_volume(0.0, self.music_player)
     
     def on_key_release(self, tasto, modificatori):
         """Gestisce il rilascio dei tasti"""
