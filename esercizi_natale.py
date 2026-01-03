@@ -48,7 +48,9 @@ class BabboNatale(arcade.Window):
         self.velocita = 4
         
         self.setup()
-    
+
+        
+
     def setup(self):
         self.babbo = arcade.Sprite("./assets/babbo.png")
         self.babbo.center_x = 300
@@ -57,7 +59,9 @@ class BabboNatale(arcade.Window):
         self.lista_babbo.append(self.babbo)
         
         self.crea_cookie()
-    
+        
+        self.background = arcade.load_texture("./assets/Albero.png")
+
     def crea_cookie(self):
         self.cookie = arcade.Sprite("./assets/cookie.png")
         self.cookie.center_x = random.randint(50, 550)
@@ -67,9 +71,14 @@ class BabboNatale(arcade.Window):
     
     def on_draw(self):
         self.clear()
+        arcade.draw_texture_rect(
+            self.background,
+            arcade.LBWH(0,0,600,600)
+        )    
         self.lista_cookie.draw()
         self.lista_babbo.draw()
-    
+        
+
     def on_update(self, delta_time):
         # Calcola movimento in base ai tasti premuti
         change_x = 0
