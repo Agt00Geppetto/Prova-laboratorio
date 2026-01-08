@@ -130,9 +130,9 @@ def snippet_7_json_read():
 
 if __name__ == "__main__":
     nome_file = input("Inserisci il nome del file:")
-    snippet_1_path_write(nome_file)
+    # snippet_1_path_write(nome_file)
     # snippet_2_path_read(nome_file)
-    # snippet_3_open(nome_file)
+    snippet_3_open(nome_file)
     # snippet_4_csv_write()
     # snippet_5_csv_read()
     # snippet_6_json_write()
