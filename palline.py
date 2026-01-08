@@ -43,37 +43,39 @@ class Pallina:
         self.vx = vx
         self.vy = vy
         self.colore = colore 
+        self.raggio = 20
     
     def aggiorna(self):
         self.x += self.vx
         self.y += self.vy
         
         # Rimbalzo sui bordi
-        if self.x - RAGGIO < 0 or self.x + RAGGIO > LARGHEZZA:
+        if self.x - self.raggio < 0 or self.x + self.raggio > LARGHEZZA:
             self.vx *= -1
-            self.x = max(RAGGIO, min(self.x, LARGHEZZA - RAGGIO))
+            self.x = max(self.raggio, min(self.x, LARGHEZZA - self.raggio))
         
-        if self.y - RAGGIO < 0 or self.y + RAGGIO > ALTEZZA:
+        if self.y - self.raggio < 0 or self.y + self.raggio > ALTEZZA:
             self.vy *= -1
-            self.y = max(RAGGIO, min(self.y, ALTEZZA - RAGGIO))
+            self.y = max(self.raggio, min(self.y, ALTEZZA - self.raggio))
     
     def disegna(self):
-        arcade.draw_circle_filled(self.x, self.y, RAGGIO, self.colore)
+        arcade.draw_circle_filled(self.x, self.y, self.raggio, self.colore)
     
     def controlla_collisione(self, altra):
         dx = self.x - altra.x
         dy = self.y - altra.y
         distanza = (dx**2 + dy**2)**0.5
         
-        if distanza < RAGGIO * 2:
+        if distanza < self.raggio + altra.raggio:
             self.vx, altra.vx = altra.vx, self.vx
             self.vy, altra.vy = altra.vy, self.vy
-            
-            offset = (RAGGIO * 2 - distanza) / 2 + 1
+            offset = (self.raggio + altra.raggio - distanza) / 2 + 1
             self.x += offset * (dx / distanza)
             self.y += offset * (dy / distanza)
             altra.x -= offset * (dx / distanza)
             altra.y -= offset * (dy / distanza)
+            self.raggio -= 1  
+            altra.raggio -= 1           
     
     def to_dict(self):
         # Converte la pallina in un dizionario (per JSON)
@@ -82,7 +84,8 @@ class Pallina:
             'y': self.y,
             'vx': self.vx,
             'vy': self.vy,
-            'colore': list(self.colore)  # JSON vuole liste, non tuple (le tuple le vedremo, pensale come liste ma "costanti")
+            'colore': list(self.colore),  # JSON vuole liste, non tuple (le tuple le vedremo, pensale come liste ma "costanti")
+            'raggio' : self.raggio
         }
     
 
@@ -93,7 +96,8 @@ def crea_pallina_da_dizionario(dati):
         dati['y'],
         dati['vx'],
         dati['vy'],
-        tuple(dati['colore'])  # Riconvertiamo in tupla
+        tuple(dati['colore']),  # Riconvertiamo in tupla
+        dati['raggio']
     )
 class GiocoPalline(arcade.Window):
     def __init__(self):
@@ -119,12 +123,17 @@ class GiocoPalline(arcade.Window):
     
     def on_update(self, delta_time):
         for pallina in self.palline:
+            if pallina.raggio < 5:
+                palline_valide.append(pallina)
             pallina.aggiorna()
         
+        self.palline = palline_valide
         for i in range(len(self.palline)):
             for j in range(i + 1, len(self.palline)):
                 self.palline[i].controlla_collisione(self.palline[j])
-    
+                #if self.palline[i] < 5:
+                    
+
     def on_mouse_press(self, x, y, button, modifiers):
         colore = (
             random.randint(50, 255),
@@ -134,7 +143,7 @@ class GiocoPalline(arcade.Window):
         vx = random.uniform(-VELOCITA_MAX, VELOCITA_MAX) # Numero a caso tra i due estremi
         vy = random.uniform(-VELOCITA_MAX, VELOCITA_MAX)
         
-        self.palline.append(Pallina(x, y, vx, vy, colore))
+        self.palline.append(Pallina(x, y, vx, vy, colore, raggio))
     
     def on_key_press(self, key, modifiers):
         if key == arcade.key.S:
