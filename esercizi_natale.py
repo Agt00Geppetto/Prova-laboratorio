@@ -128,14 +128,14 @@ class BabboNatale(arcade.Window):
         
         # Gestione collisioni
         collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie) 
-        
-        #if len(collisioni) > 0: Vuol dire che il personaggio si è scontrato con qualcosa
-        for cookie in collisioni:
-            distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie)
-            if distanza >= 100:
-                arcade.play_sound(self.suono_munch)
+        #distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie)
+
+        if len(collisioni) > 0: #Vuol dire che il personaggio si è scontrato con qualcosa
+            arcade.play_sound(self.suono_munch)
+            for cookie in collisioni:
                 cookie.remove_from_sprite_lists()
                 self.contatore += 1
+                #if distanza >= 100:
                 self.crea_cookie()# creo un altro biscotto
 
     """     
