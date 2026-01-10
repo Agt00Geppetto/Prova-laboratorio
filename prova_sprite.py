@@ -20,7 +20,7 @@ class MyGame(arcade.Window):
         self.background = arcade.load_texture("./assets/sfondoG.jpg")
 
     def on_draw(self):
-        self.clear()
+        self.clear() 
         arcade.draw_texture_rect(
             self.background,
             arcade.LBWH(0,0,800,800)
