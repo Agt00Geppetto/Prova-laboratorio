@@ -128,6 +128,7 @@ class BabboNatale(arcade.Window):
         
         # Gestione collisioni
         collisioni = arcade.check_for_collision_with_list(self.babbo, self.lista_cookie) 
+<<<<<<< HEAD
         #distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie)
 
         if len(collisioni) > 0: #Vuol dire che il personaggio si è scontrato con qualcosa
@@ -137,6 +138,17 @@ class BabboNatale(arcade.Window):
                 self.contatore += 1
                 #if distanza >= 100:
                 self.crea_cookie()# creo un altro biscotto
+=======
+        
+        if len(collisioni) > 0: #Vuol dire che il personaggio si è scontrato con qualcosa
+            arcade.play_sound(self.suono_munch)
+            for cookie in collisioni:
+                #distanza = arcade.get_distance_between_sprites(self.babbo, self.cookie)
+                #if distanza >= 100:
+                    cookie.remove_from_sprite_lists()
+                    self.contatore += 1
+                    self.crea_cookie()# creo un altro biscotto
+>>>>>>> 9bab254a876b7dfbe86ca421dd2e08fb85aa9147
 
     """     
     def contatore(self):

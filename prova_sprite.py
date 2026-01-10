@@ -24,7 +24,7 @@ class MyGame(arcade.Window):
         arcade.draw_texture_rect(
             self.background,
             arcade.LBWH(0,0,800,800)
-        )
+        ) 
         self.lista_p1.draw()
         
     def on_update(self, delta_time):
