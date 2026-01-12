@@ -1,5 +1,6 @@
 import arcade
 import os
+import random
 # from arcade import *
 
 class MyGame(arcade.Window):
@@ -8,12 +9,14 @@ class MyGame(arcade.Window):
         self.p1 = None
         self.barile = None
         self.secchio = None
+        self.pyshics_engine = None
         self.lista_secchio = arcade.SpriteList()
         self.lista_barile = arcade.SpriteList()
         self.lista_p1 = arcade.SpriteList()
         self.lista_muri = arcade.SpriteList()
         self.lista_piattafforme = arcade.SpriteList()
         self.lista_scale = arcade.SpriteList()
+        
 
         self.setup()
 
@@ -24,21 +27,23 @@ class MyGame(arcade.Window):
         self.p1.scale = 0.5
         self.lista_p1.append(self.p1)
         self.pyshics_engine = arcade.PhysicsEnginePlatformer(
-            self,
             player_sprite = self.p1,
-            muri = self.lista_muri,
-            piattaforme = self.lista_piattafforme,
-            scale = self.lista_scale,
-            costante_g = 0.5,
+            walls = self.lista_muri,
+            platforms = self.lista_piattafforme,
+            ladders = self.lista_scale,
+            gravity_constant = 0.5,
         )
-
+        
         self.crea_muri()
 
         self.background = arcade.load_texture("./assets/sfondoG.jpg")
 
     def crea_muri(self):
         self.barile = arcade.Sprite("./assets/barile.png")
-        pass
+        self.barile.center_x = random.randint(50, 500)
+        self.barile.center_y = 215
+        self.barile.scale = 1.0
+        self.lista_barile.append(self.barile)
 
     def on_draw(self):
         self.clear() 
@@ -50,6 +55,7 @@ class MyGame(arcade.Window):
         
     def on_update(self, delta_time):
         self.lista_p1.update()
+        self.pyshics_engine.update()
 
     def on_key_press(self, tasto, modificatori):
         if tasto == arcade.key.SPACE:
