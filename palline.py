@@ -122,6 +122,7 @@ class GiocoPalline(arcade.Window):
         )
     
     def on_update(self, delta_time):
+        palline_valide = []
         for pallina in self.palline:
             if pallina.raggio < 5:
                 palline_valide.append(pallina)
