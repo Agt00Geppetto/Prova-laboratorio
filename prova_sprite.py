@@ -6,7 +6,14 @@ class MyGame(arcade.Window):
     def __init__(self, width, height, title):
         super().__init__(width, height, title)
         self.p1 = None
+        self.barile = None
+        self.secchio = None
+        self.lista_secchio = arcade.SpriteList()
+        self.lista_barile = arcade.SpriteList()
         self.lista_p1 = arcade.SpriteList()
+        self.lista_muri = arcade.SpriteList()
+        self.lista_piattafforme = arcade.SpriteList()
+        self.lista_scale = arcade.SpriteList()
 
         self.setup()
 
@@ -16,8 +23,22 @@ class MyGame(arcade.Window):
         self.p1.center_y = 215
         self.p1.scale = 0.5
         self.lista_p1.append(self.p1)
+        self.pyshics_engine = arcade.PhysicsEnginePlatformer(
+            self,
+            player_sprite = self.p1,
+            muri = self.lista_muri,
+            piattaforme = self.lista_piattafforme,
+            scale = self.lista_scale,
+            costante_g = 0.5,
+        )
+
+        self.crea_muri()
 
         self.background = arcade.load_texture("./assets/sfondoG.jpg")
+
+    def crea_muri(self):
+        self.barile = arcade.Sprite("./assets/barile.png")
+        pass
 
     def on_draw(self):
         self.clear() 
